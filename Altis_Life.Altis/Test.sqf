@@ -1,1 +1,0 @@
-Hint "Dies ist ein Test";
