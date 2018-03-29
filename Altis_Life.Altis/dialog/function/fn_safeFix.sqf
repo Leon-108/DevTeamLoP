@@ -6,9 +6,8 @@
     Description:
     Piece of functionality for the cops to close the safe (lock it)
 */
-private "_vault";
-_vault = _this select 0;
-if (!(_vault getVariable ["safe_open",false])) exitWith {hint localize "STR_Cop_VaultLocked"};
+private _vault = _this select 0;
+if (!(_vault getVariable ["safe_open",false])) exitWith {[localize "STR_Cop_VaultLocked","RED",10] spawn life_fnc_notification_system;};
 
 life_action_inUse = true;
 
@@ -55,3 +54,5 @@ life_action_inUse = false;
 
 _vault setVariable ["safe_open",false,true];
 hint localize "STR_Cop_VaultRepaired";
+[localize "STR_Cop_VaultRepaired","GREEN",5] spawn life_fnc_notification_system;
+[0,"STR_Cop_VaultRepaired",true,[_unit getVariable["realname", name _unit], profileName]] remoteExecCall ["life_fnc_broadcast",RCLIENT];

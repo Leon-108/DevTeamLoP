@@ -10,10 +10,10 @@ if (dialog) exitWith {}; //A dialog is already open.
 life_safeObj = param [0,objNull,[objNull]];
 if (isNull life_safeObj) exitWith {};
 if !(playerSide isEqualTo civilian) exitWith {};
-if ((life_safeObj getVariable ["safe",-1]) < 1) exitWith {hint localize "STR_Civ_VaultEmpty";};
-if (life_safeObj getVariable ["inUse",false]) exitWith {hint localize "STR_Civ_VaultInUse"};
-if (west countSide playableUnits < (LIFE_SETTINGS(getNumber,"minimum_cops"))) exitWith {
-    hint format [localize "STR_Civ_NotEnoughCops",(LIFE_SETTINGS(getNumber,"minimum_cops"))];
+if((life_safeObj getVariable["safe",-1]) < 1) exitWith {[localize "STR_Civ_VaultEmpty","RED",10] spawn life_fnc_notification_system;};
+if (life_safeObj getVariable ["inUse",false]) exitWith {[localize "STR_Civ_VaultInUse","RED",10] spawn life_fnc_notification_system;};
+if (west countSide playableUnits < (LIFE_SETTINGS(getNumber,"minimum_cops_bank"))) exitWith {
+	[format [localize "STR_Civ_NotEnoughCops",(LIFE_SETTINGS(getNumber,"minimum_cops_bank"))],"RED",10] spawn life_fnc_notification_system;
 };
 if (!createDialog "Federal_Safe") exitWith {localize "STR_MISC_DialogError"};
 

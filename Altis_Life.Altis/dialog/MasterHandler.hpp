@@ -1,5 +1,5 @@
 /*
-    Master UI Resource File
+	Master UI Resource File
 */
 #include "common.hpp"
 #include "shop_items.hpp"
@@ -10,7 +10,7 @@
 #include "bank.hpp"
 #include "veh_shop.hpp"
 #include "shops.hpp"
-#include "hud_stats.hpp"
+#include "ui.hpp"
 #include "admin_menu.hpp"
 #include "cell_phone.hpp"
 #include "wanted_list.hpp"
@@ -22,9 +22,15 @@
 #include "pInteraction.hpp"
 #include "deathScreen.hpp"
 #include "vehicleShop.hpp"
-#include "vehicleShop3D.hpp"
 #include "settings.hpp"
 #include "federalReserve.hpp"
-#include "compensate.hpp"
-#include "FuelStat.hpp"
-#include "newsStation.hpp"
+#include "wantedadd2.hpp"
+#include "channel.hpp"
+#include "goldSafe.hpp"
+#include "jail_time.hpp"
+#include "smartphone.hpp"
+#include "veh_repaint.hpp"
+#include "vehicleShop3D.hpp"
+#include "revoke_license.hpp"
+#include "LicensesDialog.hpp"
+#include "holy_help.hpp"

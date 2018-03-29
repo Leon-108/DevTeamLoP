@@ -6,21 +6,24 @@
     Description:
     Figure it out.
 */
-private ["_value"];
-_value = parseNumber(ctrlText 2702);
+if(isNil "life_money_antiglitch") then {life_money_antiglitch = false;};
+if(life_money_antiglitch) exitWith {
+	["Geldspam verboten","RED",5] spawn life_fnc_notification_system;
+	ctrlShow[2001,true];
+};
+private _value = parseNumber(ctrlText 2702);
 
 //Series of stupid checks
-if (_value > 999999) exitWith {hint localize "STR_ATM_GreaterThan";};
-if (_value < 0) exitWith {};
-if (!([str(_value)] call TON_fnc_isnumber)) exitWith {hint localize "STR_ATM_notnumeric"};
-if (_value > CASH) exitWith {hint localize "STR_ATM_NotEnoughCash"};
+if(_value > 10000000) exitWith {[localize "STR_ATM_GreaterThan","RED",5] spawn life_fnc_notification_system;};
+if(_value < 0) exitWith {};
+if(_value > CASH) exitWith {[localize "STR_ATM_NotEnoughCash","RED",10] spawn life_fnc_notification_system;};
 
 CASH = CASH - _value;
 BANK = BANK + _value;
 
-hint format [localize "STR_ATM_DepositSuccess",[_value] call life_fnc_numberText];
 [] call life_fnc_atmMenu;
 [6] call SOCK_fnc_updatePartial;
+[format[localize "STR_ATM_DepositSuccess",[_value] call life_fnc_numberText],"GREEN",5] spawn life_fnc_notification_system;
 
 if (LIFE_SETTINGS(getNumber,"player_moneyLog") isEqualTo 1) then {
     if (LIFE_SETTINGS(getNumber,"battlEye_friendlyLogging") isEqualTo 1) then {
@@ -29,4 +32,10 @@ if (LIFE_SETTINGS(getNumber,"player_moneyLog") isEqualTo 1) then {
         money_log = format [localize "STR_DL_ML_depositedBank",profileName,(getPlayerUID player),_value,[BANK] call life_fnc_numberText,[CASH] call life_fnc_numberText];
     };
     publicVariableServer "money_log";
+};
+[]spawn 
+{
+	life_money_antiglitch = true;
+	uiSleep 1;
+	life_money_antiglitch = false;
 };

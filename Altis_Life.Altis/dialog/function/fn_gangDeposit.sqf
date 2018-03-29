@@ -6,19 +6,22 @@
     Description:
     Deposits money into the players gang bank.
 */
-private ["_value"];
-_value = parseNumber(ctrlText 2702);
+if(isNil "life_money_antiglitch") then {life_money_antiglitch = false;};
+if(life_money_antiglitch) exitWith {
+	["Geldspam verboten","RED",5] spawn life_fnc_notification_system;
+	ctrlShow[2001,true];
+};
+private _value = parseNumber(ctrlText 2702);
 group player setVariable ["gbank_in_use_by",player,true];
 
 //Series of stupid checks
-if (isNil {(group player) getVariable "gang_name"}) exitWith {hint localize "STR_ATM_NotInGang"}; // Checks if player isn't in a gang
-if (_value > 999999) exitWith {hint localize "STR_ATM_GreaterThan";};
-if (_value < 0) exitWith {};
-if (!([str(_value)] call TON_fnc_isnumber)) exitWith {hint localize "STR_ATM_notnumeric"};
-if (_value > CASH) exitWith {hint localize "STR_ATM_NotEnoughCash"};
-if ((group player getVariable ["gbank_in_use_by",player]) != player) exitWith {hint localize "STR_ATM_WithdrawMin"}; //Check if it's in use.
+if(_value > 999999) exitWith {[localize "STR_ATM_GreaterThan","RED",10] spawn life_fnc_notification_system;};
+if(_value < 0) exitWith {};
+if(!([str(_value)] call life_fnc_isnumeric)) exitWith {[localize "STR_ATM_notnumeric","RED",10] spawn life_fnc_notification_system;};
+if(_value > BANK) exitWith {[localize "STR_NOTF_NotEnoughFunds","RED",10] spawn life_fnc_notification_system;};
+if !((group player getVariable ["gbank_in_use_by",player]) isEqualTo player) exitWith {[localize "STR_ATM_WithdrawMin","RED",10] spawn life_fnc_notification_system}; //Check if it's in use.
 
-CASH = CASH - _value;
+BANK = BANK - _value;
 _gFund = GANG_FUNDS;
 _gFund = _gFund + _value;
 group player setVariable ["gang_bank",_gFund,true];
@@ -28,8 +31,7 @@ if (life_HC_isActive) then {
 } else {
     [1,group player] remoteExecCall ["TON_fnc_updateGang",RSERV];
 };
-
-hint format [localize "STR_ATM_DepositSuccessG",[_value] call life_fnc_numberText];
+[format[localize "STR_ATM_DepositSuccessG",[_value] call life_fnc_numberText],"GREEN",5] spawn life_fnc_notification_system;
 [] call life_fnc_atmMenu;
 [6] call SOCK_fnc_updatePartial; //Silent Sync
 
@@ -41,3 +43,10 @@ if (LIFE_SETTINGS(getNumber,"player_moneyLog") isEqualTo 1) then {
     };
     publicVariableServer "money_log";
 };
+[]spawn 
+{
+	life_money_antiglitch = true;
+	uiSleep 1;
+	life_money_antiglitch = false;
+};
+

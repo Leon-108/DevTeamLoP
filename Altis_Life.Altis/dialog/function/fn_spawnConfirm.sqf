@@ -24,7 +24,7 @@ if (life_spawn_point isEqualTo []) then {
     } else {
         player setPos (getMarkerPos (_sp select 0));
     };
-    titleText[format ["%2 %1",_sp select 1,localize "STR_Spawn_Spawned"],"BLACK IN"];
+    [format["%2 %1",_sp select 1,localize "STR_Spawn_Spawned"],"RED",10] spawn life_fnc_notification_system;
 } else {
     if (playerSide isEqualTo civilian) then {
         if (isNil {(call compile format ["%1",life_spawn_point select 0])}) then {
@@ -51,12 +51,18 @@ if (life_spawn_point isEqualTo []) then {
     } else {
         player setPos (getMarkerPos (life_spawn_point select 0));
     };
-    titleText[format ["%2 %1",life_spawn_point select 1,localize "STR_Spawn_Spawned"],"BLACK IN"];
+    [format["%2 %1",life_spawn_point select 1,localize "STR_Spawn_Spawned"],"RED",10] spawn life_fnc_notification_system;
 };
-
-if (life_firstSpawn) then {
-    life_firstSpawn = false;
-    [] call life_fnc_welcomeNotification;
+[] spawn {
+	cutText ["","BLACK IN"];
+	if(life_firstSpawn) then {
+		private["_handle"];
+		_handle = [] spawn life_fnc_initIntro;
+		sleep 5;
+		[] execVM "lop\monitor.sqf";
+		waitUntil {scriptDone _handle};
+		life_firstSpawn = false;
+	};
+	[] call life_fnc_playerSkins;
+	[] call life_fnc_hudSetup;
 };
-[] call life_fnc_playerSkins;
-[] call life_fnc_hudSetup;

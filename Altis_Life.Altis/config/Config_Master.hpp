@@ -7,7 +7,7 @@
 class Life_Settings {
 /* Logging and Security Settings*/
     /* Security Settings */
-    spyGlass_toggle = true; //Spyglass On/Off Toggle --> True = On & False = Off
+    spyGlass_toggle = false; //Spyglass On/Off Toggle --> True = On & False = Off
 
     /* Data Logging Settings */
     battlEye_friendlyLogging = false; //False [default] - Read the logs from the server.rpt. True - Read the logs from the publicVariable.log. NOTE: Due to how diag_log works it will log to both files either way and the setting is merely for beautification purposes.
@@ -18,7 +18,7 @@ class Life_Settings {
 /* Database Related Settings */
     /* Player Data Saving */
     save_virtualItems = true; //Save Virtual items (all sides)?
-    saved_virtualItems[] = { "pickaxe","fuelEmpty","fuelFull", "spikeStrip", "lockpick", "defuseKit","storageSmall","storageBig","redgull","coffee","waterBottle","apple","peach","tbacon","donuts","rabbit","salema","ornate","mackerel","tuna","mullet","catshark","turtle_soup","hen","rooster","sheep","goat","defibrillator","toolkit" }; //Array of virtual items that can be saved on your player.
+    saved_virtualItems[] = { "energy","warmdrink","waterbottle","alkohol","limo","obst1","obst2","backware1","backware2","backware3","essen_warm1","essen_warm2","essen_warm3","delikatesse","fuelE","fuelF", "spikeStrip", "lockpick", "defuseKit","storageSmall","storageBig","defibrillator","toolkit","lampe","wand","mauer","schranke","sperre","dixi","tisch","generator","matratze","zelt","scalpel","pickaxe","angel","sense","schaufel","axt","kidney" }; //Array of virtual items that can be saved on your player.
     save_playerStats = true; //Save food, water and damage (all sides)?
     save_civilian_weapons = false; //Allow civilians to save weapons on them?
     save_civilian_position = false; //Save civilian location?
@@ -37,12 +37,13 @@ class Life_Settings {
 
 /* System Settings */
     /* ATM & Federal Reserve System Configurations */
-    global_ATM = true; //Allow users to access any ATM on the map (Marked & Unmarked).
-    noatm_timer = 10; //Time in minutes that players cannot deposit money after selling stolen gold.
-    minimum_cops = 5; //Minimum cops required online to rob the Federal Reserve
-
+    global_ATM = false; //Allow users to access any ATM on the map (Marked & Unmarked).
+    noatm_timer = 5; //Time in minutes that players cannot deposit money after selling stolen gold.
+    minimum_cops_bank = 7; //Minimum cops required online to rob the Federal Reserve
+	minimum_cops_filiale = 7;
+	minimum_cops_tanke = 4;
     /*Death settings*/
-    drop_weapons_onDeath = false; //Set true to enable weapon dropping on death. False (default) will delete player weapons on death, allowing them to be revived with them instead
+    drop_weapons_onDeath = true; //Set true to enable weapon dropping on death. False (default) will delete player weapons on death, allowing them to be revived with them instead
 
     /* Basic System Configurations */
     donor_level = false; //Enable the donor level set in database (var = life_donorlevel; levels = 0,1,2,3,4,5). ATTENTION! Before enabling, read: https://www.bistudio.com/community/game-content-usage-rules & https://www.bistudio.com/monetization
@@ -108,9 +109,9 @@ class Life_Settings {
     hospital_heal_fee = 100; //Fee to heal at a hospital NPC
 
     /* Paycheck & Bank System Configurations */
-    bank_cop = 7000; //Amount of cash in bank for new cops
-    bank_civ = 3000; //Amount of cash in bank for new civillians
-    bank_med = 6500; //Amount of cash in bank for new medics
+    bank_cop = 38000; //Amount of cash in bank for new cops
+    bank_civ = 750; //Amount of cash in bank for new civillians
+    bank_med = 28000; //Amount of cash in bank for new medics
 
     paycheck_cop = 500; //Payment for cops
     paycheck_civ = 350; //Payment for civillians
@@ -132,14 +133,14 @@ class Life_Settings {
 
     /* Vehicle System Configurations */
     chopShop_vehicles[] = { "Car", "Air" }; //Vehicles that can be chopped. (Can add: "Ship" and possibly more -> look at the BI wiki...)
-    vehicle_infiniteRepair[] = {false, false, true, false}; //Set to true for unlimited repairs with 1 toolkit. False will remove toolkit upon use. civilian, west, independent, east
+    vehicle_infiniteRepair[] = {false, true, true, false}; //Set to true for unlimited repairs with 1 toolkit. False will remove toolkit upon use. civilian, west, independent, east
     vehicleShop_rentalOnly[] = { "B_MRAP_01_hmg_F", "B_G_Offroad_01_armed_F", "B_Boat_Armed_01_minigun_F" }; //Vehicles that can only be rented and not purchased. (Last only for the session)
-    vehicleShop_3D = false; //Add preview 3D inside Shop vehicle.       Default : False
+    vehicleShop_3D = true; //Add preview 3D inside Shop vehicle.       Default : False
 
     /* Vehicle Purchase Prices */
     vehicle_purchase_multiplier_CIVILIAN = 1; //Civilian Vehicle Buy Price = Config_Vehicle price * multiplier
-    vehicle_purchase_multiplier_COP = .5; //Cop Vehicle Buy Price = Config_Vehicle price * multiplier
-    vehicle_purchase_multiplier_MEDIC = .75; //Medic Vehicle Buy Price = Config_Vehicle price * multiplier
+    vehicle_purchase_multiplier_COP = 1; //Cop Vehicle Buy Price = Config_Vehicle price * multiplier
+    vehicle_purchase_multiplier_MEDIC = 1; //Medic Vehicle Buy Price = Config_Vehicle price * multiplier
     vehicle_purchase_multiplier_OPFOR = -1; // -- NOT IN USE -- Simply left in for east support.
 
     /* Vehicle Rental Prices */
@@ -149,9 +150,9 @@ class Life_Settings {
     vehicle_rental_multiplier_OPFOR = -1; // -- NOT IN USE -- Simply left in for east support.
 
     /* Vehicle Sell Prices */
-    vehicle_sell_multiplier_CIVILIAN = .5; //Civilian Vehicle Garage Sell Price = Vehicle Buy Price * multiplier
-    vehicle_sell_multiplier_COP = .5; //Cop Vehicle Garage Sell Price = Vehicle Buy Price * multiplier
-    vehicle_sell_multiplier_MEDIC = .5; //Medic Vehicle Garage Sell Price = Vehicle Buy Price * multiplier
+    vehicle_sell_multiplier_CIVILIAN = .25; //Civilian Vehicle Garage Sell Price = Vehicle Buy Price * multiplier
+    vehicle_sell_multiplier_COP = .25; //Cop Vehicle Garage Sell Price = Vehicle Buy Price * multiplier
+    vehicle_sell_multiplier_MEDIC = .25; //Medic Vehicle Garage Sell Price = Vehicle Buy Price * multiplier
     vehicle_sell_multiplier_OPFOR = -1; // -- NOT IN USE -- Simply left in for east support.
 
     /* "Other" Vehicle Prices */
@@ -220,5 +221,5 @@ class Life_Settings {
 #include "Config_Gather.hpp"
 #include "Config_SpawnPoints.hpp"
 #include "Config_Process.hpp"
-#include "Config_Housing.hpp"
-#include "Config_Garages.hpp"
+//#include "Config_Housing.hpp"
+//#include "Config_Garages.hpp"
